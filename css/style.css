@@ -1,0 +1,38 @@
+
+body{
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Paragraph Ellipsis */
+p {
+    display: block;
+    display: -webkit-box;
+    max-width: 100%;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+html, body {
+  height: 100%;
+}
+
+#wrap {
+  min-height: 100%;
+}
+
+#main {
+  overflow:auto;
+  padding-bottom:60px; /* this needs to be bigger than footer height*/
+}
+
+.footer {
+  position: relative;
+  margin-top: -60px; /* negative value of footer height */
+  height: 60px;
+  padding-top: 20px;
+  clear:both;
+}
+#heart{
+	color: red;
+}
