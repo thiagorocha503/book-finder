@@ -56,10 +56,19 @@ function buildListCard(books) {
 function buildCard(book) {
     console.log(book);
     var cardContainer = document.createElement("div");
-    //${book["volumeInfo"]["imageLinks"]['thumbnail']}
-    var imageLinks = book["volumeInfo"]["imageLinks"];
     cardContainer.className = "card shadow-sm mb-2";
-    cardContainer.insertAdjacentHTML("afterbegin", "\n        <div class=\"card-body d-flex\">\n            <div>\n                <img class=\"fluid-img\" src=\"" + (imageLinks != null ? imageLinks["smallThumbnail"] : "") + "\">\n            </div>\n            <div class=\"px-3 flex-grow-1\">\n                <h4 class=\"text-gray\">" + book["volumeInfo"]["title"] + "</h4>\n                <p class=\"text-gray text-muted\">by\n                    " + (book["volumeInfo"]["authors"] != undefined ?
-        book["volumeInfo"]["authors"].map(function (item, i) { return item.trim(); }).join("") : "Unknow ") + " | \n                    " + (book["volumeInfo"]["publishedDate"] == undefined ? " Unknown" : book["volumeInfo"]["publishedDate"]) + "</p>\n                <p>\n                    " + book["searchInfo"]["textSnippet"] + "\n                </p>\n                <a href=\"" + book["volumeInfo"]["infoLink"] + "\" class=\"btn btn-primary text-white\" target=\"_blank\" >See more</a>\n            </div>\n        </div>\n    ");
+    cardContainer.insertAdjacentHTML("afterbegin", "\n        <div class=\"card-body d-flex\">\n            <div style=\"min-width: 128px;\">\n                <img class=\"fluid-img\" alt=\"image not available\" src=" + (book["volumeInfo"]["imageLinks"] != undefined ? book["volumeInfo"]["imageLinks"]["smallThumbnail"] : "img/thumbnail.png") + ">\n            </div>\n            <div class=\"px-3 flex-grow-1\">\n                <h4 class=\"text-gray\">" + book["volumeInfo"]["title"] + "</h4>\n                <p class=\"text-gray text-muted\">by\n                    " + (book["volumeInfo"]["authors"] != undefined ?
+        book["volumeInfo"]["authors"].map(function (item, i) { return item.trim(); }).join("")
+        : "author unknown") + "\n                    " + (book["volumeInfo"]["publishedDate"] != undefined ? " | " + formatDate(book["volumeInfo"]["publishedDate"]) : "") + "\n                </p>\n                <p>\n                    " + (book["searchInfo"] != undefined ? book["searchInfo"]["textSnippet"] : "") + "\n                </p>\n                <a href=" + (book["volumeInfo"]["infoLink"] != undefined ? book["volumeInfo"]["infoLink"] : "") + " class=\"btn btn-primary text-white\" target=\"_blank\" >See more</a>\n            </div>\n        </div>\n    ");
     return cardContainer;
+}
+function formatDate(date) {
+    if (date == null) {
+        return "";
+    }
+    var regex = new RegExp("^\\d{4}\-\\d{2}\-\\d{2}$");
+    if (regex.test(date)) {
+        return date.substr(0, 4);
+    }
+    return date;
 }

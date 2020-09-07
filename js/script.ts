@@ -62,27 +62,37 @@ function buildListCard(books: Array<any>) {
 function buildCard(book: any): HTMLDivElement {
     console.log(book);
     let cardContainer: HTMLDivElement = document.createElement("div");
-    //${book["volumeInfo"]["imageLinks"]['thumbnail']}
-    let imageLinks = book["volumeInfo"]["imageLinks"];
     cardContainer.className = "card shadow-sm mb-2";
     cardContainer.insertAdjacentHTML("afterbegin", `
         <div class="card-body d-flex">
-            <div>
-                <img class="fluid-img" src="${imageLinks != null ? imageLinks["smallThumbnail"] : ""}">
+            <div style="min-width: 128px;">
+                <img class="fluid-img" alt="image not available" src=${book["volumeInfo"]["imageLinks"] != undefined ? book["volumeInfo"]["imageLinks"]["smallThumbnail"] : "img/thumbnail.png"}>
             </div>
             <div class="px-3 flex-grow-1">
                 <h4 class="text-gray">${book["volumeInfo"]["title"]}</h4>
                 <p class="text-gray text-muted">by
                     ${book["volumeInfo"]["authors"] != undefined ?
-            book["volumeInfo"]["authors"].map((item: string, i: number) => item.trim()).join("") : "Unknow "
-        } | 
-                    ${book["volumeInfo"]["publishedDate"] == undefined ? " Unknown" : book["volumeInfo"]["publishedDate"]}</p>
-                <p>
-                    ${book["searchInfo"]["textSnippet"]}
+                        book["volumeInfo"]["authors"].map((item: string, i: number) => item.trim()).join("")
+                        : "author unknown"
+                    }
+                    ${book["volumeInfo"]["publishedDate"] != undefined ? " | " + formatDate(book["volumeInfo"]["publishedDate"]) : ""}
                 </p>
-                <a href="${book["volumeInfo"]["infoLink"]}" class="btn btn-primary text-white" target="_blank" >See more</a>
+                <p>
+                    ${book["searchInfo"] != undefined ? book["searchInfo"]["textSnippet"] : ""}
+                </p>
+                <a href=${book["volumeInfo"]["infoLink"] != undefined?book["volumeInfo"]["infoLink"]: ""} class="btn btn-primary text-white" target="_blank" >See more</a>
             </div>
         </div>
     `);
     return cardContainer;
+}
+
+function formatDate(date: string | null) {
+    if (date == null) {
+        return "";
+    }
+    let regex = new RegExp("^\\d{4}\-\\d{2}\-\\d{2}$")
+    if (regex.test(date)) {
+        return date.substr(0, 4);
+    } return date;
 }
