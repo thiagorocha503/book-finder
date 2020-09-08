@@ -18,9 +18,14 @@ function search(query) {
                 render(books);
             }
             else {
-                console.log(xmlHtmlResquest);
+                console.log("status: " + xmlHtmlResquest.status);
             }
         }
+    };
+    xmlHtmlResquest.timeout = 3000;
+    xmlHtmlResquest.onerror = function (evt) {
+        console.error("on Error> " + xmlHtmlResquest.status);
+        $("#error-modal").modal("show");
     };
     xmlHtmlResquest.open("get", "https://www.googleapis.com/books/v" + GOOGLE_API_VERSION + "/volumes?q=" + query);
     xmlHtmlResquest.send();

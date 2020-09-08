@@ -18,9 +18,14 @@ function search(query: string) {
                 let books = reponseJSON["totalItems"] != 0 ? reponseJSON["items"] : [];
                 render(books);
             } else {
-                console.log(xmlHtmlResquest)
+                console.log("status: "+xmlHtmlResquest.status)
             }
         }
+    }
+    xmlHtmlResquest.timeout =3000;
+    xmlHtmlResquest.onerror = function(evt){
+        console.error("on Error> "+xmlHtmlResquest.status)
+        $("#error-modal").modal("show");
     }
     xmlHtmlResquest.open("get", `https://www.googleapis.com/books/v${GOOGLE_API_VERSION}/volumes?q=${query}`)
     xmlHtmlResquest.send();
@@ -40,7 +45,6 @@ function onSearch() {
 }
 
 function render(books: Array<Object>) {
-
     let container: HTMLDivElement = document.getElementById("row-result") as HTMLDivElement;
     let oldCardList: HTMLDivElement = document.getElementById("card-list") as HTMLDivElement;
     let newCardList: HTMLDivElement = buildListCard(books);
