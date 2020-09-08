@@ -18,13 +18,13 @@ function search(query: string) {
                 let books = reponseJSON["totalItems"] != 0 ? reponseJSON["items"] : [];
                 render(books);
             } else {
-                console.log("status: "+xmlHtmlResquest.status)
+                console.log("status: " + xmlHtmlResquest.status)
             }
         }
     }
-    xmlHtmlResquest.timeout =3000;
-    xmlHtmlResquest.onerror = function(evt){
-        console.error("on Error> "+xmlHtmlResquest.status)
+    xmlHtmlResquest.timeout = 3000;
+    xmlHtmlResquest.onerror = function (evt) {
+        console.error("on Error> " + xmlHtmlResquest.status)
         $("#error-modal").modal("show");
     }
     xmlHtmlResquest.open("get", `https://www.googleapis.com/books/v${GOOGLE_API_VERSION}/volumes?q=${query}`)
@@ -47,7 +47,15 @@ function onSearch() {
 function render(books: Array<Object>) {
     let container: HTMLDivElement = document.getElementById("row-result") as HTMLDivElement;
     let oldCardList: HTMLDivElement = document.getElementById("card-list") as HTMLDivElement;
-    let newCardList: HTMLDivElement = buildListCard(books);
+    let newCardList: HTMLDivElement;
+    if (books.length == 0) {
+        newCardList = document.createElement("div");
+        newCardList.id = "card-list";
+        newCardList.className = "col mb-4 text-muted";
+        newCardList.innerHTML = "No results found";
+    } else {
+        newCardList = buildListCard(books);
+    }
     container.replaceChild(newCardList, oldCardList);
 
 }
@@ -76,15 +84,15 @@ function buildCard(book: any): HTMLDivElement {
                 <h4 class="text-gray">${book["volumeInfo"]["title"]}</h4>
                 <p class="text-gray text-muted">by
                     ${book["volumeInfo"]["authors"] != undefined ?
-                        book["volumeInfo"]["authors"].map((item: string, i: number) => item.trim()).join("")
-                        : "author unknown"
-                    }
+            book["volumeInfo"]["authors"].map((item: string, i: number) => item.trim()).join("")
+            : "author unknown"
+        }
                     ${book["volumeInfo"]["publishedDate"] != undefined ? " | " + formatDate(book["volumeInfo"]["publishedDate"]) : ""}
                 </p>
                 <p>
                     ${book["searchInfo"] != undefined ? book["searchInfo"]["textSnippet"] : ""}
                 </p>
-                <a href=${book["volumeInfo"]["infoLink"] != undefined?book["volumeInfo"]["infoLink"]: ""} class="btn btn-primary text-white" target="_blank" >See more</a>
+                <a href=${book["volumeInfo"]["infoLink"] != undefined ? book["volumeInfo"]["infoLink"] : ""} class="btn btn-primary text-white" target="_blank" >See more</a>
             </div>
         </div>
     `);

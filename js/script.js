@@ -45,7 +45,16 @@ function onSearch() {
 function render(books) {
     var container = document.getElementById("row-result");
     var oldCardList = document.getElementById("card-list");
-    var newCardList = buildListCard(books);
+    var newCardList;
+    if (books.length == 0) {
+        newCardList = document.createElement("div");
+        newCardList.id = "card-list";
+        newCardList.className = "col mb-4 text-muted";
+        newCardList.innerHTML = "No results found";
+    }
+    else {
+        newCardList = buildListCard(books);
+    }
     container.replaceChild(newCardList, oldCardList);
 }
 function buildListCard(books) {
