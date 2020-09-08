@@ -2,16 +2,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Paragraph Ellipsis */
-p {
-  display: block;
-  display: -webkit-box;
-  max-width: 100%;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+
 html,
 body {
   height: 100%;
@@ -36,4 +27,22 @@ body {
 
 #heart {
   color: red;
+}
+
+/* Paragraphe an header Ellipsis */
+p, h5{
+  display: block;
+  display: -webkit-box;
+  max-width: 100%;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+h5{
+  -webkit-line-clamp: 2;
+}
+
+p{
+ -webkit-line-clamp: 4;
 }
