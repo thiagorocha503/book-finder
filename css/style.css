@@ -46,3 +46,12 @@ h5{
 p{
  -webkit-line-clamp: 4;
 }
+
+#top{
+  background-color: white;
+}
+
+#main{
+  padding-top: 155px;
+}
+
