@@ -16,9 +16,11 @@ function search(query) {
                 var reponseJSON = JSON.parse(xmlHtmlResquest.responseText);
                 var books = reponseJSON["totalItems"] != 0 ? reponseJSON["items"] : [];
                 render(books);
+                $("#loading").css("display", "none");
             }
             else {
                 console.log("status: " + xmlHtmlResquest.status);
+                $("#loading").css("display", "none");
             }
         }
     };
@@ -26,9 +28,12 @@ function search(query) {
     xmlHtmlResquest.onerror = function (evt) {
         console.error("on Error> " + xmlHtmlResquest.status);
         $("#error-modal").modal("show");
+        $("#loading").css("display", "none");
     };
     xmlHtmlResquest.open("get", "https://www.googleapis.com/books/v" + GOOGLE_API_VERSION + "/volumes?q=" + query);
     xmlHtmlResquest.send();
+    $("#card-list").html("");
+    $("#loading").css("display", "block");
 }
 function onSearch() {
     inputSearch.classList.remove("is-invalid");
