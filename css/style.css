@@ -2,33 +2,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-
-html,
-body {
-  height: 100%;
-}
-
-#wrap {
-  min-height: 100%;
-}
-
-#main {
-  overflow: auto;
-  padding-bottom: 60px; /* this needs to be bigger than footer height*/
-}
-
-.footer {
-  position: relative;
-  margin-top: -60px; /* negative value of footer height */
-  height: 60px;
-  padding-top: 20px;
-  clear: both;
-}
-
-#heart {
-  color: red;
-}
-
 /* Paragraphe an header Ellipsis */
 p, h5{
   display: block;
@@ -47,15 +20,7 @@ p{
  -webkit-line-clamp: 4;
 }
 
-#top{
-  background-color: white;
-}
 
-#main{
-  padding-top: 155px;
-}
-
-
-#loading img{
+#loading img, #loading-bottom img{
   height: 32px;
 }
